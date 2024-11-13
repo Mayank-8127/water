@@ -76,22 +76,37 @@ function App() {
   return (
 <>
     <div className="container">
-        <div className="data-info">
-            <div>Tds: {tds}</div>
-            <div>Temp: {temp}</div>
-            <div>Water used: {usage}</div>
+        {/* Cards Section */}
+        <div className="cards">
+            <div className="card">
+                <h3>TDS</h3>
+                <div className="card-value">{tds}</div>
+            </div>
+            <div className="card">
+                <h3>Temperature</h3>
+                <div className="card-value">{temp}</div>
+            </div>
+            <div className="card">
+                <h3>Water Used</h3>
+                <div className="card-value">{usage}</div>
+            </div>
         </div>
-        <div className="chart-container">
-            <TdsChart data={data.slice(80, 100)} />
-        </div>
-        <div className="chart-container">
-            <TempChart data={data.slice(80, 100)} />
-        </div>
-        <div className="chart-container">
-            <WaterUsed data={data.slice(80, 100)} />
+
+        {/* Charts Section */}
+        <div className="charts">
+            <div className="chart-container">
+                <TdsChart data={data.slice(80, 100)} />
+            </div>
+            <div className="chart-container">
+                <TempChart data={data.slice(80, 100)} />
+            </div>
+            <div className="chart-container">
+                <WaterUsed data={data.slice(80, 100)} />
+            </div>
         </div>
     </div>
 </>
+
 
   )
 }
