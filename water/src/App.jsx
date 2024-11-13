@@ -3,6 +3,7 @@ import './App.css'
 import TdsChart from './components/Tdschart';
 import TempChart from './components/TempChart';
 import WaterUsed from './components/WaterUsed';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function App() {
   const [data, setData] = useState([]);
@@ -75,21 +76,70 @@ function App() {
 
   return (
 <>
-    <div className="container">
-        <div className="data-info">
-            <div>Tds: {tds}</div>
-            <div>Temp: {temp}</div>
-            <div>Water used: {usage}</div>
+<div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-800 mb-8">Water Monitoring</h1>
+        
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm font-medium text-gray-500">TDS</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold text-gray-900">{tds}</p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm font-medium text-gray-500">Temperature</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold text-gray-900">{temp}°</p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm font-medium text-gray-500">Water Used</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold text-gray-900">{usage}</p>
+            </CardContent>
+          </Card>
         </div>
-        <div className="chart-container">
-            <TdsChart data={data.slice(80, 100)} />
+        
+        {/* Charts */}
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>TDS Over Time</CardTitle>
+            </CardHeader>
+            <CardContent className="h-64">
+              <TdsChart data={data.slice(80, 100)} />
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>Temperature Over Time</CardTitle>
+            </CardHeader>
+            <CardContent className="h-64">
+              <TempChart data={data.slice(80, 100)} />
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>Water Usage Over Time</CardTitle>
+            </CardHeader>
+            <CardContent className="h-64">
+              <WaterUsed data={data.slice(80, 100)} />
+            </CardContent>
+          </Card>
         </div>
-        <div className="chart-container">
-            <TempChart data={data.slice(80, 100)} />
-        </div>
-        <div className="chart-container">
-            <WaterUsed data={data.slice(80, 100)} />
-        </div>
+      </div>
     </div>
 </>
 
