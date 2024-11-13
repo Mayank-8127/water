@@ -74,26 +74,25 @@ function App() {
 
 
   return (
-    <>
-      <div>
-        Tds: {tds}
-      </div>
-      <div>
-        Temp: {temp}
-      </div>
-      <div>
-        Water used: {usage}
-      </div>
-      <div style={{width: '500px', height: '300px'}}>
-        {<TdsChart data={data.slice(80, 100)}/>}
-      </div>
-      <div style={{width: '500px', height: '300px'}}>
-        {<TempChart data={data.slice(80, 100)}/>}
-      </div>
-      <div style={{width: '500px', height: '300px'}}>
-        {<WaterUsed data={data.slice(80, 100)}/>}
-      </div>
-    </>
+<>
+    <div className="container">
+        <div className="data-info">
+            <div>Tds: {tds}</div>
+            <div>Temp: {temp}</div>
+            <div>Water used: {usage}</div>
+        </div>
+        <div className="chart-container">
+            <TdsChart data={data.slice(80, 100)} />
+        </div>
+        <div className="chart-container">
+            <TempChart data={data.slice(80, 100)} />
+        </div>
+        <div className="chart-container">
+            <WaterUsed data={data.slice(80, 100)} />
+        </div>
+    </div>
+</>
+
   )
 }
 
