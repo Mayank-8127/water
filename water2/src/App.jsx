@@ -14,10 +14,29 @@ function App() {
   
   function getHoursAndMinutes(isoString) {
     const date = new Date(isoString);
-    const hours = String(date.getUTCHours()).padStart(2, '0');
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
+    
+    // Add 5 hours and 30 minutes
+    let hours = date.getUTCHours() + 5;
+    let minutes = date.getUTCMinutes() + 30;
+    
+    // Handle minute overflow
+    if (minutes >= 60) {
+      minutes -= 60;
+      hours += 1;
+    }
+    
+    // Handle hour overflow
+    if (hours >= 24) {
+      hours -= 24;
+    }
+  
+    // Format hours and minutes as two-digit strings
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    
+    return `${formattedHours}:${formattedMinutes}`;
   }
+  
 
   async function getdata(){
     let response = await fetch("https://api.thingspeak.com/channels/2716484/feeds.json");
@@ -80,20 +99,20 @@ function App() {
 <>
 <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Water Monitoring</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-8">Water Monitoring System</h1>
         
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-gray-500">Average TDS</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-500">Average TDS Value</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className={`text-2xl font-bold ${tds > 500 ? 'text-red-600' : 'text-gray-900'}`}>
+              <p className={`text-2xl font-bold ${tds > 200 ? 'text-red-600' : 'text-gray-900'}`}>
                 {tds}
               </p>
               
-              {tds > 500 && (
+              {tds > 200 && (
                 <Alert variant="destructive" className="mt-4">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Critical TDS Level</AlertTitle>
@@ -116,7 +135,7 @@ function App() {
           
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-gray-500">Water Used</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-500">Total Water Used</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold text-gray-900">{usage}L</p>
@@ -146,7 +165,7 @@ function App() {
           
           <Card>
             <CardHeader>
-              <CardTitle>Water Usage Over Time</CardTitle>
+              <CardTitle>Total Water Usage Over Time</CardTitle>
             </CardHeader>
             <CardContent className="h-64">
               <WaterUsed data={data.slice(1, 100)} />
